@@ -14,6 +14,7 @@ export const QuestionHandler = ({ question, userAnswer, onClick }: Props) => {
       <div className={styles.answerContainer}>
         {question.answers.map((answer, index) => (
           <button
+            key={answer.index}
             disabled={userAnswer !== undefined}
             className={clsx([
               styles.answer,
