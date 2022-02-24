@@ -1,29 +1,22 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./App.css";
-import { Category } from "./common/requests/categoriesRequest";
-import { createQuiz, Question } from "./common/requests/quizRequest";
+import { QuizContext, QuizContextProps } from "./common/contexts/QuizContext";
+import { Question } from "./common/requests/quizRequest";
 import { QuizFormPage } from "./features/quiz-form-page/QuizFormPage";
 import { QuizPage } from "./features/quiz-page/QuizPage";
 
 function App() {
-  const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<Question[]>([]);
 
-  const fetchQuiz = async (
-    amount: number,
-    difficulty: string | undefined,
-    category: Category | undefined
-  ) => {
-    const quizQuestions = await createQuiz(amount, difficulty, category);
-    setQuizQuestions(quizQuestions);
-  };
+  const contextValue: QuizContextProps = useMemo(() => {
+    return { questions, setQuestions };
+  }, [questions, setQuestions]);
 
   return (
     <div className="App">
-      {quizQuestions.length === 0 ? (
-        <QuizFormPage onSubmit={fetchQuiz} />
-      ) : (
-        <QuizPage questions={quizQuestions} />
-      )}
+      <QuizContext.Provider value={contextValue}>
+        {questions.length === 0 ? <QuizFormPage /> : <QuizPage />}
+      </QuizContext.Provider>
     </div>
   );
 }
