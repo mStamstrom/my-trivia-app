@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../common/components/Button";
+import { useQuizContext } from "../../common/contexts/QuizContext";
 import { Answer, Question } from "../../common/requests/quizRequest";
 import { QuestionHandler } from "./QuestionHandler";
-
-interface Props {
-  questions: Question[];
-}
 
 interface UserAnswer {
   questionText: string;
   answer: Answer;
 }
 
-export const QuizPage = ({ questions }: Props) => {
+export const QuizPage = () => {
   const [answers, setAnswers] = useState<UserAnswer[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const { questions, setQuestions } = useQuizContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (questions.length === 0) {
+      navigate("/my-trivia-app");
+    }
+  }, [questions, navigate]);
+
+  if (questions.length === 0) {
+    return null;
+  }
 
   const onAnswer = (answer: Answer) => {
     setAnswers([

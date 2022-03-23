@@ -7,11 +7,13 @@ import {
 import { Spinner } from "../../common/components/Spinner";
 import { QuizForm } from "./QuizForm";
 import { useQuizContext } from "../../common/contexts/QuizContext";
+import { useNavigate } from "react-router-dom";
 
 export const QuizFormPage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { setQuestions } = useQuizContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCategories().then((categoryResponse) => {
@@ -27,6 +29,7 @@ export const QuizFormPage = () => {
   ) => {
     const quizQuestions = await createQuiz(amount, difficulty, category);
     setQuestions(quizQuestions);
+    navigate("quiz");
   };
 
   return (

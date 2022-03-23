@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { QuizContext, QuizContextProps } from "./common/contexts/QuizContext";
 import { Question } from "./common/requests/quizRequest";
@@ -12,10 +13,19 @@ function App() {
     return { questions, setQuestions };
   }, [questions, setQuestions]);
 
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const params = Object.fromEntries(urlSearchParams.entries());
+  console.log(params);
+
   return (
     <div className="App">
       <QuizContext.Provider value={contextValue}>
-        {questions.length === 0 ? <QuizFormPage /> : <QuizPage />}
+        <Routes>
+          <Route path="my-trivia-app">
+            <Route index element={<QuizFormPage />}></Route>
+            <Route path="quiz" element={<QuizPage />}></Route>
+          </Route>
+        </Routes>
       </QuizContext.Provider>
     </div>
   );

@@ -12,7 +12,7 @@ export const Dropdown = (props: Props) => {
       {props.label}
       <select className={styles.select} onChange={props.onChange}>
         {props.options.map((option) => (
-          <option>{option}</option>
+          <option key={option}>{option}</option>
         ))}
       </select>
     </label>

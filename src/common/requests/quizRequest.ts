@@ -1,3 +1,4 @@
+import { shuffleArray } from "../utils/suffleArray";
 import { Category } from "./categoriesRequest";
 
 export type Answer = {
@@ -25,13 +26,6 @@ interface ApiQuizResponse {
     incorrect_answers: string[];
   }>;
 }
-
-const shuffleArray = (currentQuestions: Answer[]) => {
-  return currentQuestions
-    .map((value) => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }, index) => ({ ...value, index }));
-};
 
 function decodeEntities(encodedString: string): string {
   const textArea = document.createElement("textarea");
