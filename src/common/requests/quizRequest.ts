@@ -1,5 +1,5 @@
-import { shuffleArray } from "../utils/suffleArray";
 import { Category } from "./categoriesRequest";
+import { mapToQuestions } from "./mapToQuestions";
 
 export type Answer = {
   isCorrectAnswer: boolean;
@@ -15,7 +15,7 @@ export type Question = {
   answers: Answer[];
 };
 
-interface ApiQuizResponse {
+export interface ApiQuizResponse {
   responseCode: number;
   results: Array<{
     category: string;
@@ -26,32 +26,6 @@ interface ApiQuizResponse {
     incorrect_answers: string[];
   }>;
 }
-
-function decodeEntities(encodedString: string): string {
-  const textArea = document.createElement("textarea");
-  textArea.innerHTML = encodedString;
-  return textArea.value;
-}
-
-const mapToQuestions = (responseJson: ApiQuizResponse): Question[] => {
-  return responseJson.results.map((result) => {
-    const answers = result.incorrect_answers.map((answer, index) => ({
-      answer: decodeEntities(answer),
-      isCorrectAnswer: false,
-      index,
-    }));
-    answers.push({
-      isCorrectAnswer: true,
-      answer: decodeEntities(result.correct_answer),
-      index: answers.length,
-    });
-    return {
-      ...result,
-      answers: shuffleArray(answers),
-      question: decodeEntities(result.question),
-    };
-  });
-};
 
 export const createQuiz = async (
   amount: number,

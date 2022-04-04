@@ -36,8 +36,16 @@ export const QuizPage = () => {
   const moveToNextQuestion = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
+
+  const correctAnswers = answers.filter((x) => x.answer.isCorrectAnswer);
   return (
     <div>
+      <div style={{ display: "flex", marginBottom: 20 }}>
+        <div style={{ marginRight: 100 }}>Points: {correctAnswers.length}</div>
+        <div>
+          Question {currentQuestionIndex + 1} of {questions.length}
+        </div>
+      </div>
       <QuestionHandler
         question={questions[currentQuestionIndex]}
         onClick={onAnswer}
