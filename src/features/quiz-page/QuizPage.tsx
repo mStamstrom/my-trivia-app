@@ -13,8 +13,10 @@ interface UserAnswer {
 export const QuizPage = () => {
   const [answers, setAnswers] = useState<UserAnswer[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const { questions, setQuestions } = useQuizContext();
+  const { questions } = useQuizContext();
   const navigate = useNavigate();
+
+  const isLastQuestion = currentQuestionIndex === questions.length - 1;
 
   useEffect(() => {
     if (questions.length === 0) {
@@ -34,7 +36,11 @@ export const QuizPage = () => {
   };
 
   const moveToNextQuestion = () => {
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
+    if (isLastQuestion) {
+      navigate("/my-trivia-app/quiz-completed");
+    } else {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
   };
 
   const correctAnswers = answers.filter((x) => x.answer.isCorrectAnswer);
@@ -55,7 +61,7 @@ export const QuizPage = () => {
         disabled={answers[currentQuestionIndex] === undefined}
         onClick={() => moveToNextQuestion()}
       >
-        Next question
+        {isLastQuestion ? "End quiz" : "Next question"}
       </Button>
     </div>
   );

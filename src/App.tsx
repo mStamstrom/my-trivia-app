@@ -24,6 +24,10 @@ function App() {
           <Route path="my-trivia-app">
             <Route index element={<QuizFormPage />}></Route>
             <Route path="quiz" element={<QuizPage />}></Route>
+            <Route
+              path="quiz-completed"
+              element={<div>You finished the Quiz!!!</div>}
+            ></Route>
           </Route>
         </Routes>
       </QuizContext.Provider>

@@ -79,53 +79,5 @@ export const quizFixture: ApiQuizResponse = {
       correct_answer: "Dakar",
       incorrect_answers: ["Nouakchott", "Conakry", "Monrovia"],
     },
-    {
-      category: "Entertainment: Video Games",
-      type: "multiple",
-      difficulty: "medium",
-      question:
-        "How many games are there in the &quot;Colony Wars&quot; series for the PlayStation?",
-      correct_answer: "3",
-      incorrect_answers: ["2", "4", "5"],
-    },
-    {
-      category: "Entertainment: Film",
-      type: "multiple",
-      difficulty: "hard",
-      question:
-        "Which boxer was famous for striking the gong in the introduction to J. Arthur Rank films?",
-      correct_answer: "Bombardier Billy Wells",
-      incorrect_answers: ["Freddie Mills", "Terry Spinks", "Don Cockell"],
-    },
-    {
-      category: "History",
-      type: "multiple",
-      difficulty: "medium",
-      question: "When did the Crisis of the Third Century begin?",
-      correct_answer: "235 AD",
-      incorrect_answers: ["235 BC", "242 AD", "210 AD"],
-    },
-    {
-      category: "Entertainment: Musicals & Theatres",
-      type: "multiple",
-      difficulty: "medium",
-      question:
-        "Who played Marquis de Lafayette and Thomas Jefferson in the original Broadway run of Hamilton?",
-      correct_answer: "Daveed Diggs",
-      incorrect_answers: [
-        "Lin-Manuel Miranda",
-        "Javier Mu&ntilde;oz",
-        "Wayne Brady",
-      ],
-    },
-    {
-      category: "Science & Nature",
-      type: "multiple",
-      difficulty: "medium",
-      question:
-        "What is the molecular formula of the active component of chili peppers(Capsaicin)?",
-      correct_answer: "C18H27NO3",
-      incorrect_answers: ["C21H23NO3", "C6H4Cl2", "C13H25NO4"],
-    },
   ],
 };

@@ -1,7 +1,18 @@
 import { Answer } from "../requests/quizRequest";
 import { shuffleArray } from "./suffleArray";
 
-test("When shuffleArray then object should change position", () => {
+beforeEach(() => {
+  jest.spyOn(global.Math, "random").mockReturnValueOnce(0.7);
+  jest.spyOn(global.Math, "random").mockReturnValueOnce(0.2);
+  jest.spyOn(global.Math, "random").mockReturnValueOnce(0.5);
+  jest.spyOn(global.Math, "random").mockReturnValueOnce(0.1);
+});
+
+afterEach(() => {
+  jest.spyOn(global.Math, "random").mockRestore();
+});
+
+test("When shuffling questions then questions should change order", () => {
   const questions: Answer[] = [
     {
       isCorrectAnswer: true,
@@ -25,5 +36,6 @@ test("When shuffleArray then object should change position", () => {
     },
   ];
   const shuffledArray = shuffleArray(questions);
+  console.log(shuffledArray);
   expect(questions[0].answer).not.toBe(shuffledArray[0].answer);
 });
