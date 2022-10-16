@@ -12,29 +12,30 @@ afterEach(() => {
   jest.spyOn(global.Math, "random").mockRestore();
 });
 
-test("When shuffling questions then questions should change order", () => {
-  const questions: Answer[] = [
-    {
-      isCorrectAnswer: true,
-      answer: "answer 1",
-      index: 0,
-    },
-    {
-      isCorrectAnswer: false,
-      answer: "answer 2",
-      index: 1,
-    },
-    {
-      isCorrectAnswer: false,
-      answer: "answer 3",
-      index: 2,
-    },
-    {
-      isCorrectAnswer: false,
-      answer: "answer 4",
-      index: 3,
-    },
-  ];
+const questions: Answer[] = [
+  {
+    isCorrectAnswer: true,
+    answer: "answer 1",
+    index: 0,
+  },
+  {
+    isCorrectAnswer: false,
+    answer: "answer 2",
+    index: 1,
+  },
+  {
+    isCorrectAnswer: false,
+    answer: "answer 3",
+    index: 2,
+  },
+  {
+    isCorrectAnswer: false,
+    answer: "answer 4",
+    index: 3,
+  },
+];
+
+test("shuffleAnswers should suffle answers", () => {
   const shuffledArray = shuffleAnswers(questions);
   console.log(shuffledArray);
   expect(questions[0].answer).not.toBe(shuffledArray[0].answer);
