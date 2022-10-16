@@ -1,11 +1,11 @@
 import {
   render,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
-  within,
 } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 import {
   QuizContext,
   QuizContextProps,
@@ -18,7 +18,17 @@ const contextValue: QuizContextProps = {
   setQuestions: () => {},
 };
 
-test("When a user creates a quiz given input is valid then redirect to quiz page", async () => {
+const mockedUsedNavigate = jest.fn();
+
+jest.mock("react-router-dom", () => ({
+  ...(jest.requireActual("react-router-dom") as any),
+  useNavigate: () => mockedUsedNavigate,
+}));
+
+test(`Given a user wants to start a quiz 
+      when submitting a filled form 
+      then should be able to start the quiz`, async () => {
+  // Render/Given
   render(
     <BrowserRouter>
       <QuizContext.Provider value={contextValue}>
@@ -31,6 +41,7 @@ test("When a user creates a quiz given input is valid then redirect to quiz page
     return screen.queryByRole("progressbar");
   });
 
+  // Actions/When
   userEvent.type(screen.getByRole("spinbutton", { name: "Amount" }), "10");
 
   userEvent.click(screen.getByRole("combobox", { name: "Difficulty level" }));
@@ -40,13 +51,10 @@ test("When a user creates a quiz given input is valid then redirect to quiz page
   );
 
   const spy = jest.spyOn(quizRequests, "createQuiz");
-
   userEvent.click(screen.getByRole("button", { name: "Submit" }));
 
+  // Assert/Then
   expect(spy).toHaveBeenCalledTimes(1);
   expect(spy).toHaveBeenCalledWith(10, "Easy", undefined);
-
-  // assert
-
-  // screen.debug();
+  await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith("quiz"));
 });

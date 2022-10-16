@@ -1,5 +1,5 @@
 import { Answer } from "../requests/quizRequest";
-import { shuffleArray } from "./suffleArray";
+import { shuffleAnswers } from "./suffleArray";
 
 beforeEach(() => {
   jest.spyOn(global.Math, "random").mockReturnValueOnce(0.7);
@@ -35,7 +35,7 @@ test("When shuffling questions then questions should change order", () => {
       index: 3,
     },
   ];
-  const shuffledArray = shuffleArray(questions);
+  const shuffledArray = shuffleAnswers(questions);
   console.log(shuffledArray);
   expect(questions[0].answer).not.toBe(shuffledArray[0].answer);
 });

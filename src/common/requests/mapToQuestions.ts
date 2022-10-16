@@ -1,4 +1,4 @@
-import { shuffleArray } from "../utils/suffleArray";
+import { shuffleAnswers } from "../utils/suffleArray";
 import { ApiQuizResponse, Question } from "./quizRequest";
 
 function decodeEntities(encodedString: string): string {
@@ -21,7 +21,7 @@ export const mapToQuestions = (responseJson: ApiQuizResponse): Question[] => {
     });
     return {
       ...result,
-      answers: shuffleArray(answers),
+      answers: shuffleAnswers(answers),
       question: decodeEntities(result.question),
     };
   });
