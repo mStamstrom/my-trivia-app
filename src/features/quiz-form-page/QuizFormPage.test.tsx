@@ -26,9 +26,9 @@ jest.mock("react-router-dom", () => ({
 }));
 
 test(`Given a user wants to start a quiz 
-      when submitting a filled form 
-      then should be able to start the quiz`, async () => {
-  // Render/Given
+      When user correctly fills out the form
+      And presses submit button
+      Then should be able to start the quiz`, async () => {
   render(
     <BrowserRouter>
       <QuizContext.Provider value={contextValue}>
@@ -41,20 +41,40 @@ test(`Given a user wants to start a quiz
     return screen.queryByRole("progressbar");
   });
 
-  // Actions/When
   userEvent.type(screen.getByRole("spinbutton", { name: "Amount" }), "10");
 
-  userEvent.click(screen.getByRole("combobox", { name: "Difficulty level" }));
   userEvent.selectOptions(
     screen.getByRole("combobox", { name: "Difficulty level" }),
     ["Easy"]
   );
 
+  userEvent.selectOptions(screen.getByRole("combobox", { name: "Category" }), [
+    "Art",
+  ]);
+
   const spy = jest.spyOn(quizRequests, "createQuiz");
   userEvent.click(screen.getByRole("button", { name: "Submit" }));
 
-  // Assert/Then
   expect(spy).toHaveBeenCalledTimes(1);
-  expect(spy).toHaveBeenCalledWith(10, "Easy", undefined);
+  expect(spy).toHaveBeenCalledWith(10, "Easy", { id: 25, name: "Art" });
   await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith("quiz"));
+});
+
+test(`User can fill out form`, async () => {
+  render(<QuizFormPage />);
+
+  await waitForElementToBeRemoved(() => {
+    return screen.queryByRole("progressbar");
+  });
+
+  userEvent.type(screen.getByRole("spinbutton", { name: "Amount" }), "10");
+
+  userEvent.selectOptions(
+    screen.getByRole("combobox", { name: "Difficulty level" }),
+    ["Easy"]
+  );
+
+  userEvent.selectOptions(screen.getByRole("combobox", { name: "Category" }), [
+    "Art",
+  ]);
 });
