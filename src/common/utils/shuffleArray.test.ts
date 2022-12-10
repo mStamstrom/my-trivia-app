@@ -35,8 +35,7 @@ const questions: Answer[] = [
   },
 ];
 
-test("shuffleAnswers should suffle answers", () => {
+test("shuffleAnswers should shuffle answers", () => {
   const shuffledArray = shuffleAnswers(questions);
-  console.log(shuffledArray);
   expect(questions[0].answer).not.toBe(shuffledArray[0].answer);
 });
